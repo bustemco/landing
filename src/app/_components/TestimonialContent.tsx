@@ -128,9 +128,22 @@ export function TestimonialHeader(testimonial: twitterContent) {
 }
 
 export function TestimonialBody(testimonial: twitterContent) {
+  // Split content by @ symbol and wrap mentions in blue span
+  const contentParts = testimonial.content.split(/(@\w+)/);
+
   return (
     <div className="flex flex-col items-center">
-      <p className="mb-4 text-sm">{testimonial.content}</p>
+      <p className="mb-4 text-sm">
+        {contentParts.map((part, i) =>
+          part.startsWith('@') ? (
+            <span key={i} className="text-blue-500">
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        )}
+      </p>
       <div className="relative h-40 w-full">
         {testimonial.content_image && (
           <Image
