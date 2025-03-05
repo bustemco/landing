@@ -1,6 +1,7 @@
 'use client';
 
-import { Globe, Target, PenLine } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Globe, Target, PenLine, CalendarDays } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
 
@@ -36,36 +37,64 @@ export default function Hero() {
   }, []);
 
   return (
-    <main>
-      <div className="flex flex-col items-center justify-center">
-        <div
-          className="inline-flex rounded-xl px-3 py-1"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(230, 233, 245, 0) 0%, rgba(230, 233, 245, 0.4) 100%), #E6E9F5',
-            boxShadow:
-              '0px 0px 0px 1px rgba(14, 63, 126, 0.06), 0px 1px 2px rgba(42, 51, 70, 0.05), 0px 2px 3px rgba(42, 51, 70, 0.03), 0px 2px 8px rgba(34, 42, 53, 0.04), 0px 12px 12px -6px rgba(42, 51, 70, 0.03)',
-          }}
-        >
-          <p className="font-inter text-base font-semibold text-[#333E5A]">
-            ✨ Instant Scanning, Detection & DMCA Takedown Service
-          </p>
+    <main className="pt-12">
+      <div className="flex flex-col items-center justify-center gap-8">
+        <GlossyDescription />
+        <HeroTitle currentIndex={currentIndex} />
+        <div className="flex max-w-[600px] items-center justify-center">
+          <HeroButton />
         </div>
-        <div className="flex flex-col text-center text-3xl font-extrabold">
-          <div className="flex">
-            <h1>We Find And Takedown</h1>
-            <KeywordRotator currentIndex={currentIndex} keywords={keywords} />
-          </div>
-          <h1>With One Click</h1>
+        <div className="flex justify-between gap-8">
+          {features.map((feature) => (
+            <FeatureCard key={feature.title} {...feature} />
+          ))}
         </div>
-      </div>
-      <div className=""></div>
-      <div className="flex justify-between gap-8">
-        {features.map((feature) => (
-          <FeatureCard key={feature.title} {...feature} />
-        ))}
       </div>
     </main>
+  );
+}
+
+function HeroTitle({ currentIndex }: { currentIndex: number }) {
+  return (
+    <div className="flex flex-col text-center text-3xl font-extrabold">
+      <div className="flex">
+        <h1>We Find And Takedown</h1>
+        <KeywordRotator currentIndex={currentIndex} keywords={keywords} />
+      </div>
+      <h1>With One Click</h1>
+    </div>
+  );
+}
+
+function GlossyDescription() {
+  return (
+    <div
+      className="inline-flex rounded-xl px-3 py-1"
+      style={{
+        background:
+          'linear-gradient(180deg, rgba(230, 233, 245, 0) 0%, rgba(230, 233, 245, 0.4) 100%), #E6E9F5',
+        boxShadow:
+          '0px 0px 0px 1px rgba(14, 63, 126, 0.06), 0px 1px 2px rgba(42, 51, 70, 0.05), 0px 2px 3px rgba(42, 51, 70, 0.03), 0px 2px 8px rgba(34, 42, 53, 0.04), 0px 12px 12px -6px rgba(42, 51, 70, 0.03)',
+      }}
+    >
+      <p className="font-inter text-base font-semibold text-[#333E5A]">
+        ✨ Instant Scanning, Detection & DMCA Takedown Service
+      </p>
+    </div>
+  );
+}
+
+function HeroButton() {
+  return (
+    <Button
+      className="flex w-[600px] flex-row items-center justify-center gap-2 rounded-md bg-gradient-to-b from-[#2A315D] to-[#111A4A] p-6 shadow-[0px_0px_0px_1px_rgba(23,23,51,0.9),0px_1px_0px_rgba(23,23,51,0.9),0px_10px_6px_rgba(23,23,51,0.04),0px_1px_2px_rgba(23,23,51,0.06),0px_2px_6px_rgba(23,23,51,0.05),0px_12px_12px_-6px_rgba(23,23,51,0.05),inset_0px_1px_0px_rgba(255,255,255,0.2),inset_0px_0px_0px_1px_rgba(255,255,255,0.2)]"
+      variant="default"
+    >
+      <CalendarDays className="h-5 w-5 text-white" />
+      <span className="font-inter text-base font-semibold leading-5 text-white">
+        Book a 30-Min Call
+      </span>
+    </Button>
   );
 }
 
@@ -104,13 +133,17 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="flex flex-row items-center justify-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
-        {icon}
+    <div className="flex flex-row items-center gap-3">
+      <div className="flex items-center rounded-[20.5px] bg-[#F0F0FA] p-[3px]">
+        <div className="flex items-center justify-center gap-1 rounded-full border border-[#DCDCF0] bg-[#E6EAF5] p-1">
+          {icon}
+        </div>
       </div>
-      <div className="flex flex-col items-start justify-center">
-        <h2 className="text-lg font-bold">{title}</h2>
-        <p className="text-sm text-gray-500">{description}</p>
+      <div className="flex flex-col items-start">
+        <h2 className="bg-gradient-to-b from-[#2A315D] to-[#111A4A] bg-clip-text text-[20px] font-bold leading-7 text-transparent">
+          {title}
+        </h2>
+        <p className="text-sm leading-5 text-[#585866]">{description}</p>
       </div>
     </div>
   );
